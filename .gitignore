@@ -11,6 +11,7 @@ build/
 .venv/
 venv/
 env/
+*.whl
 
 # Model artifacts
 backend/models/*.joblib
@@ -18,18 +19,17 @@ backend/models/*.pkl
 backend/models/*.json
 !backend/models/.gitkeep
 
-# Node
+# Node / Frontend
 node_modules/
 frontend/dist/
-frontend/build/
-.npm
+frontend/.vite/
 *.tsbuildinfo
 
 # Environment
 .env
 .env.local
 .env.production
-!.env.example
+.env.*.local
 
 # IDE
 .vscode/
@@ -44,21 +44,16 @@ Thumbs.db
 desktop.ini
 
 # Docker
+*.log
 docker-compose.override.yml
 
-# Logs
-*.log
-logs/
-
-# Coverage
-htmlcov/
+# Testing
 .coverage
-.coverage.*
-coverage/
-lcov.info
-
-# pytest
+htmlcov/
 .pytest_cache/
+coverage/
 
-# mypy
-.mypy_cache/
+# Neo4j local data
+neo4j-data/
+neo4j/data/
+neo4j/logs/

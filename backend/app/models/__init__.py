@@ -1,1 +1,1 @@
-"""Pydantic models and domain schemas."""
+# backend.app.models
