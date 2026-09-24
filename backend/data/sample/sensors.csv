@@ -1,0 +1,13 @@
+id,shipment_id,location_id,timestamp,temperature_c,humidity_pct,vibration_g,alert,alert_reason,is_demo
+SNS-001,SHP-001,LOC-001,2026-09-24T08:00:00,32.5,65.0,0.2,false,,true
+SNS-002,SHP-001,LOC-001,2026-09-24T12:00:00,38.1,72.0,0.8,true,temperature_high,true
+SNS-003,SHP-001,LOC-002,2026-09-24T16:00:00,29.0,58.0,0.3,false,,true
+SNS-004,SHP-004,LOC-001,2026-09-22T06:00:00,31.0,60.0,1.5,true,vibration_high,true
+SNS-005,SHP-004,LOC-001,2026-09-22T10:00:00,33.0,63.0,0.4,false,,true
+SNS-006,SHP-005,LOC-011,2026-09-24T14:00:00,26.0,80.0,0.1,false,,true
+SNS-007,SHP-005,LOC-011,2026-09-24T18:00:00,27.5,85.0,0.2,true,humidity_high,true
+SNS-008,SHP-007,LOC-004,2026-09-24T09:00:00,24.0,45.0,0.1,false,,true
+SNS-009,SHP-010,LOC-006,2026-09-23T07:00:00,30.0,70.0,2.1,true,vibration_high,true
+SNS-010,SHP-010,LOC-006,2026-09-23T15:00:00,35.0,68.0,0.5,true,temperature_high,true
+SNS-011,SHP-002,LOC-004,2026-09-25T06:00:00,23.0,42.0,0.1,false,,true
+SNS-012,SHP-003,LOC-009,2026-09-21T08:00:00,28.0,55.0,0.3,false,,true

@@ -1,0 +1,13 @@
+id,name,type,lat,lon,address,is_demo
+LOC-001,Chennai Auto Parts Supplier,supplier,13.0827,80.2707,"45 Industrial Estate, Chennai",true
+LOC-002,Mumbai Central Warehouse,warehouse,19.0760,72.8777,"12 Dock Road, Mumbai",true
+LOC-003,Delhi Distribution Center,distribution_center,28.7041,77.1025,"88 Logistics Park, Delhi",true
+LOC-004,Bangalore Electronics Hub,supplier,12.9716,77.5946,"7 IT Corridor, Bangalore",true
+LOC-005,Hyderabad Pharma Warehouse,warehouse,17.3850,78.4867,"23 Pharma City, Hyderabad",true
+LOC-006,Kolkata Port Terminal,port,22.5726,88.3639,"1 Port Trust Road, Kolkata",true
+LOC-007,Pune Retail Shop,shop,18.5204,73.8567,"56 MG Road, Pune",true
+LOC-008,Jaipur Distribution Hub,distribution_center,26.9124,75.7873,"34 Transport Nagar, Jaipur",true
+LOC-009,Ahmedabad Textile Supplier,supplier,23.0225,72.5714,"78 Textile Market, Ahmedabad",true
+LOC-010,Lucknow Regional Shop,shop,26.8467,80.9462,"12 Hazratganj, Lucknow",true
+LOC-011,Kochi Spice Warehouse,warehouse,9.9312,76.2673,"5 Spice Terminal, Kochi",true
+LOC-012,Vizag Steel Supplier,supplier,17.6868,83.2185,"90 Steel Plant Rd, Visakhapatnam",true
