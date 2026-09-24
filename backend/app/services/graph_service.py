@@ -301,6 +301,12 @@ class InMemoryGraphService(GraphServiceBase):
                         except ValueError:
                             pass
 
+                    raw_weight = row.get("weight_kg", 0)
+                    try:
+                        weight_val = float(raw_weight)
+                    except (ValueError, TypeError):
+                        weight_val = 0.0
+
                     shp = Shipment(
                         id=row["id"],
                         origin=origin,
@@ -309,7 +315,7 @@ class InMemoryGraphService(GraphServiceBase):
                         planned_delivery=planned,
                         actual_delivery=actual,
                         cargo_type=row.get("cargo_type", ""),
-                        weight_kg=float(row.get("weight_kg", 0)),
+                        weight_kg=weight_val,
                         is_demo_data=True,
                     )
                     self._shipments[shp.id] = shp

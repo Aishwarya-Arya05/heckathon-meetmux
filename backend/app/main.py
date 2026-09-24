@@ -12,10 +12,6 @@ import sys
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-
-# Load .env before importing config
-load_dotenv()
-
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
@@ -24,6 +20,9 @@ from app.dependencies import init_services, shutdown_services
 from app.middleware import setup_middleware
 from app.routers.health import router as health_router
 from app.routers.shipments import route_router, router as shipments_router
+
+# Load .env configuration
+load_dotenv()
 
 
 # ── Logging setup ────────────────────────────────────────

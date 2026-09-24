@@ -20,7 +20,6 @@ from typing import Dict, List, Optional
 
 from app.models.domain import (
     CandidateRoute,
-    Coordinates,
     RiskFactor,
     SensorReading,
     Shipment,
@@ -213,7 +212,7 @@ class FeatureBuilder:
         if links:
             features.total_linked_locations = len(
                 set(
-                    [l.source.id for l in links] + [l.target.id for l in links]
+                    [lnk.source.id for lnk in links] + [lnk.target.id for lnk in links]
                 )
             )
             # Check if any linked locations have recent delayed shipments

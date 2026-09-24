@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 # ── Shared ───────────────────────────────────────────────
@@ -118,6 +117,8 @@ class RiskFactorResponse(BaseModel):
 
 
 class DelayRiskResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     probability: float = Field(..., ge=0.0, le=1.0)
     risk_band: str
     prediction_status: str

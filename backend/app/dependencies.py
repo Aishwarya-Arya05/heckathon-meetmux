@@ -37,13 +37,33 @@ _feature_builder: Optional[FeatureBuilder] = None
 _neo4j_driver = None
 
 
+def ensure_services():
+    """Ensure in-memory and default services are initialized synchronously if accessed before lifespan."""
+    global _graph_service, _route_provider, _prediction_service, _feature_builder
+    if _graph_service is None:
+        _graph_service = InMemoryGraphService()
+    if _route_provider is None:
+        _route_provider = create_route_provider(
+            settings.route_provider,
+            settings.osrm_base_url,
+            settings.route_timeout_seconds,
+        )
+    if _prediction_service is None:
+        _prediction_service = create_prediction_service(
+            settings.model_artifact_path,
+            settings.model_version,
+        )
+    if _feature_builder is None:
+        _feature_builder = FeatureBuilder()
+
+
 async def init_services():
     """Initialize all services at application startup."""
     global _graph_service, _route_provider, _prediction_service, _feature_builder, _neo4j_driver
 
     # ── Graph service ────────────────────────
     try:
-        if settings.neo4j_password:
+        if settings.neo4j_password and settings.neo4j_uri:
             from neo4j import AsyncGraphDatabase
 
             _neo4j_driver = AsyncGraphDatabase.driver(
@@ -57,32 +77,13 @@ async def init_services():
             _graph_service = Neo4jGraphService(_neo4j_driver, settings.neo4j_database)
             logger.info("Connected to Neo4j at %s", settings.neo4j_uri)
         else:
-            raise ConnectionError("No Neo4j password configured")
+            _graph_service = InMemoryGraphService()
     except Exception as exc:
         logger.warning("Neo4j unavailable (%s) – using in-memory demo data", exc)
         _graph_service = InMemoryGraphService()
 
-    # ── Route provider ───────────────────────
-    _route_provider = create_route_provider(
-        settings.route_provider,
-        settings.osrm_base_url,
-        settings.route_timeout_seconds,
-    )
-    logger.info("Route provider: %s", type(_route_provider).__name__)
-
-    # ── Prediction service ───────────────────
-    _prediction_service = create_prediction_service(
-        settings.model_artifact_path,
-        settings.model_version,
-    )
-    logger.info(
-        "Prediction service: %s (model loaded: %s)",
-        type(_prediction_service).__name__,
-        _prediction_service.is_model_loaded(),
-    )
-
-    # ── Feature builder ──────────────────────
-    _feature_builder = FeatureBuilder()
+    # ── Ensure all providers are active ──────
+    ensure_services()
 
 
 async def shutdown_services():
@@ -101,20 +102,25 @@ async def shutdown_services():
 
 
 def get_graph_service() -> GraphServiceBase:
-    assert _graph_service is not None, "Services not initialized"
+    if _graph_service is None:
+        ensure_services()
     return _graph_service
 
 
 def get_route_provider() -> RouteProviderBase:
-    assert _route_provider is not None, "Services not initialized"
+    if _route_provider is None:
+        ensure_services()
     return _route_provider
 
 
 def get_prediction_service() -> PredictionServiceBase:
-    assert _prediction_service is not None, "Services not initialized"
+    if _prediction_service is None:
+        ensure_services()
     return _prediction_service
 
 
 def get_feature_builder() -> FeatureBuilder:
-    assert _feature_builder is not None, "Services not initialized"
+    if _feature_builder is None:
+        ensure_services()
     return _feature_builder
+

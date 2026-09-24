@@ -198,12 +198,47 @@ class FallbackPredictionService(PredictionServiceBase):
         probability = max(0.0, min(1.0, score))
         risk_band = self._probability_to_band(probability)
 
+        factors = list(features.contributing_factors) if features.contributing_factors else []
+        if not factors:
+            if features.distance_km > 500:
+                factors.append(
+                    RiskFactor(
+                        name="Route distance",
+                        description=f"{features.distance_km:.0f} km corridor increases exposure to transit variability",
+                        impact="increases_risk",
+                    )
+                )
+            if features.historical_delay_rate > 0.15:
+                factors.append(
+                    RiskFactor(
+                        name="Historical delay patterns",
+                        description=f"Corridor historical delay frequency is {features.historical_delay_rate * 100:.0f}%",
+                        impact="increases_risk",
+                    )
+                )
+            if features.sensor_alert_count > 0:
+                factors.append(
+                    RiskFactor(
+                        name="Sensor telemetry anomalies",
+                        description=f"{features.sensor_alert_count} alert(s) registered on this shipment profile",
+                        impact="increases_risk",
+                    )
+                )
+            if not factors:
+                factors.append(
+                    RiskFactor(
+                        name="Baseline corridor metrics",
+                        description="Short distance and normal operational baseline",
+                        impact="decreases_risk",
+                    )
+                )
+
         return DelayRiskEstimate(
             probability=round(probability, 4),
             risk_band=risk_band,
             prediction_status=PredictionStatus.FALLBACK_ESTIMATE,
             model_version=None,
-            factors=features.contributing_factors,
+            factors=factors,
             message=(
                 "This is a rule-based fallback estimate, not a trained model prediction. "
                 "It uses route distance, historical delay patterns, sensor alerts, and "

@@ -90,7 +90,7 @@ async def _run_cypher_file(driver, file_path: Path, database: str):
     async with driver.session(database=database) as session:
         for i, stmt in enumerate(statements):
             # Skip comment-only blocks
-            lines = [l for l in stmt.split("\n") if l.strip() and not l.strip().startswith("//")]
+            lines = [line for line in stmt.split("\n") if line.strip() and not line.strip().startswith("//")]
             if not lines:
                 continue
             try:

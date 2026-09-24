@@ -8,7 +8,7 @@ import logging
 import time
 import uuid
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -48,9 +48,11 @@ def setup_middleware(app: FastAPI):
                 request.url.path,
                 duration_ms,
                 type(exc).__name__,
+                exc_info=True,
             )
             return JSONResponse(
                 status_code=500,
+                headers={"X-Request-ID": request_id},
                 content={
                     "error": "internal_server_error",
                     "message": "An unexpected error occurred. Please try again.",

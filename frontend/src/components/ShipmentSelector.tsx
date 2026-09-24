@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { Coordinates, ShipmentDetail, ShipmentSummary } from '../types';
 import { getShipments, getShipment } from '../services/api';
 
@@ -25,11 +25,7 @@ export default function ShipmentSelector({
   const [destLat, setDestLat] = useState('');
   const [destLon, setDestLon] = useState('');
 
-  useEffect(() => {
-    loadShipments();
-  }, [statusFilter]);
-
-  async function loadShipments() {
+  const loadShipments = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -40,7 +36,11 @@ export default function ShipmentSelector({
     } finally {
       setLoading(false);
     }
-  }
+  }, [statusFilter]);
+
+  useEffect(() => {
+    loadShipments();
+  }, [loadShipments]);
 
   async function handleShipmentClick(id: string) {
     try {

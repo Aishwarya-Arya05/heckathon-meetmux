@@ -10,9 +10,8 @@ from __future__ import annotations
 
 import logging
 import math
-import uuid
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 
 import httpx
 

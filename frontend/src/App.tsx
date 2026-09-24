@@ -27,21 +27,21 @@ export default function App() {
   const [loadingRoutes, setLoadingRoutes] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load health check on mount
-  useEffect(() => {
-    fetchHealth();
-    const interval = setInterval(fetchHealth, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  async function fetchHealth() {
+  const fetchHealth = async () => {
     try {
       const data = await getHealth();
       setHealth(data);
     } catch {
       setHealth(null);
     }
-  }
+  };
+
+  // Load health check on mount
+  useEffect(() => {
+    fetchHealth();
+    const interval = setInterval(fetchHealth, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle shipment selection
   async function handleShipmentSelect(shipment: ShipmentDetail) {
