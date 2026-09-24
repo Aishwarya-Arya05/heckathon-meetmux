@@ -137,7 +137,7 @@ Full OpenAPI docs available at `http://localhost:8000/docs` when the backend is 
 
 ## Data Model
 
-See [docs/data-model.md](docs/data-model.md) for full Neo4j schema, entity definitions, and example Cypher queries.
+See [docs/data_model.md](docs/data_model.md) for full Neo4j schema, entity definitions, and example Cypher queries.
 
 ### Design Decision: Neo4j as Primary Store
 
